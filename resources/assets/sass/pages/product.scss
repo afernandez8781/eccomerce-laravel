@@ -2,19 +2,21 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 120px;
-    padding: 100px 0 120px;
+    padding: 80px 0 100px;
 }
 
 .product-section-image {
     display: flex;
     justify-content: center;
-    align-items: center;
-    border: 1px solid #979797;
-    padding: 30px;
+    align-items: flex-start;
+    // border: 1px solid #979797;
+    // padding: 30px;
     text-align: center;
     height: 400px;
 }
-
+.product-section-image img{
+    width: 100%;
+}
 .product-section-information {
 
     p {
@@ -34,7 +36,7 @@
 }
 
 .product-section-price {
-    font-size: 38px;
+    font-size: 25px;
     color: $text-color;
     margin-bottom: 16px;
 }

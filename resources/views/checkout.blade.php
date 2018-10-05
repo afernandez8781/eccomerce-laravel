@@ -12,43 +12,43 @@
 
     <div class="container">
 
-        <h1 class="checkout-heading stylish-heading">Pago</h1>
+        {{-- <h1 class="checkout-heading stylish-heading">Pago</h1> --}}
         <div class="checkout-section">
             <div>
                 <form action="#" id="payment-form">
                     <h2>Detalles de facturación</h2>
 
                     <div class="form-group">
-                        <label for="email">Dirección de correo electrónico</label>
+                        <label class="bmd-label-floating" for="email">Dirección de correo electrónico</label>
                         <input type="email" class="form-control" id="email" name="email" value="">
                     </div>
                     <div class="form-group">
-                        <label for="name">Nombre</label>
+                        <label class="bmd-label-floating" for="name">Nombre</label>
                         <input type="text" class="form-control" id="name" name="name" value="">
                     </div>
                     <div class="form-group">
-                        <label for="address">Dirección</label>
+                        <label class="bmd-label-floating" for="address">Dirección</label>
                         <input type="text" class="form-control" id="address" name="address" value="">
                     </div>
 
                     <div class="half-form">
                         <div class="form-group">
-                            <label for="city">Ciudad</label>
+                            <label class="bmd-label-floating" for="city">Ciudad</label>
                             <input type="text" class="form-control" id="city" name="city" value="">
                         </div>
                         <div class="form-group">
-                            <label for="province">Provincia</label>
+                            <label class="bmd-label-floating" for="province">Provincia</label>
                             <input type="text" class="form-control" id="province" name="province" value="">
                         </div>
                     </div> <!-- end half-form -->
 
                     <div class="half-form">
                         <div class="form-group">
-                            <label for="postalcode">Código Postal</label>
+                            <label class="bmd-label-floating" for="postalcode">Código Postal</label>
                             <input type="text" class="form-control" id="postalcode" name="postalcode" value="">
                         </div>
                         <div class="form-group">
-                            <label for="phone">Teléfono</label>
+                            <label class="bmd-label-floating" for="phone">Teléfono</label>
                             <input type="text" class="form-control" id="phone" name="phone" value="">
                         </div>
                     </div> <!-- end half-form -->
@@ -58,7 +58,7 @@
                     <h2>Detalles del pago</h2>
 
                     <div class="form-group">
-                        <label for="name_on_card">Nombre de la tarjeta</label>
+                        <label class="bmd-label-floating" for="name_on_card">Nombre titular de la tarjeta</label>
                         <input type="text" class="form-control" id="name_on_card" name="name_on_card" value="">
                     </div>
 

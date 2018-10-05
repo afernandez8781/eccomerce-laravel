@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: 2fr 1fr;
     grid-gap: 30px;
-    margin: 60px auto;
+    margin: 30px auto;
 
     h2 {
         margin-bottom: 30px;
@@ -33,7 +33,11 @@
 
         .cart-table-row-right {
             width: 33%;
-            padding-top: 10px;
+            // padding-top: 10px; modificate for me
+        }
+
+        .cart-table-row-right form {
+            margin-bottom:0;
         }
 
         .cart-table-img {
