@@ -1,4 +1,4 @@
-// .products-section {
+/*// .products-section {
 //     display: grid;
 //     grid-template-columns: 1fr 3fr;
 //     margin: 80px auto 80px;
@@ -12,6 +12,21 @@
 //           color: $text-color-light;
 //         }
 //     }
-// }
-
-
+// }*/
+li.active {
+	font-weight:500;
+	color: $primary;
+}
+.card-ecommerce a{
+	text-decoration: none;
+	color: #4f4f4f!important;
+	font-size: 1.25rem;
+	/*font-weight: 480;*/
+}
+.card-ecommerce .card-footer span{
+	color: #4f4f4f;
+}
+.card-ecommerce a:hover{
+	text-decoration: none;
+	color: black !important;
+}

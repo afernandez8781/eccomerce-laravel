@@ -12,44 +12,63 @@
 
     <div class="container">
 
+        @if (session()->has('success_message'))
+            <div class="spacer"></div>
+            <div class="alert alert-success">
+                {{ session()->get('success_message') }}
+            </div>
+        @endif
+
+        @if(count($errors) > 0)
+            <div class="spacer"></div>
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         {{-- <h1 class="checkout-heading stylish-heading">Pago</h1> --}}
         <div class="checkout-section">
             <div>
-                <form action="#" id="payment-form">
+                <form action="{{ route('checkout.store') }}" method="POST" id="payment-form">
+                    {{ csrf_field() }}
                     <h2>Detalles de facturación</h2>
 
                     <div class="form-group">
                         <label class="bmd-label-floating" for="email">Dirección de correo electrónico</label>
-                        <input type="email" class="form-control" id="email" name="email" value="">
+                        <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required>
                     </div>
                     <div class="form-group">
                         <label class="bmd-label-floating" for="name">Nombre</label>
-                        <input type="text" class="form-control" id="name" name="name" value="">
+                        <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required>
                     </div>
                     <div class="form-group">
                         <label class="bmd-label-floating" for="address">Dirección</label>
-                        <input type="text" class="form-control" id="address" name="address" value="">
+                        <input type="text" class="form-control" id="address" name="address" value="{{ old('address') }}" required>
                     </div>
 
                     <div class="half-form">
                         <div class="form-group">
                             <label class="bmd-label-floating" for="city">Ciudad</label>
-                            <input type="text" class="form-control" id="city" name="city" value="">
+                            <input type="text" class="form-control" id="city" name="city" value="{{ old('city') }}" required>
                         </div>
                         <div class="form-group">
                             <label class="bmd-label-floating" for="province">Provincia</label>
-                            <input type="text" class="form-control" id="province" name="province" value="">
+                            <input type="text" class="form-control" id="province" name="province" value="{{ old('province') }}" required>
                         </div>
                     </div> <!-- end half-form -->
 
                     <div class="half-form">
                         <div class="form-group">
                             <label class="bmd-label-floating" for="postalcode">Código Postal</label>
-                            <input type="text" class="form-control" id="postalcode" name="postalcode" value="">
+                            <input type="text" class="form-control" id="postalcode" name="postalcode" value="{{ old('postalcode') }}" required>
                         </div>
                         <div class="form-group">
                             <label class="bmd-label-floating" for="phone">Teléfono</label>
-                            <input type="text" class="form-control" id="phone" name="phone" value="">
+                            <input type="text" class="form-control" id="phone" name="phone" value="{{ old('phone') }}" required>
                         </div>
                     </div> <!-- end half-form -->
 
@@ -59,7 +78,7 @@
 
                     <div class="form-group">
                         <label class="bmd-label-floating" for="name_on_card">Nombre titular de la tarjeta</label>
-                        <input type="text" class="form-control" id="name_on_card" name="name_on_card" value="">
+                        <input type="text" class="form-control" id="name_on_card" name="name_on_card" value="{{ old('name_on_card') }}" required>
                     </div>
 
                     <div class="form-group">
@@ -96,7 +115,7 @@
 
                     <div class="spacer"></div>
 
-                    <button type="submit" class="button-primary full-width">Completar Orden</button>
+                    <button type="submit" id="complete-order" class="btn btn-raised btn-primary full-width">Completar Orden</button>
 
 
                 </form>
@@ -206,11 +225,26 @@
             form.addEventListener('submit', function(event) {
               event.preventDefault();
 
-              stripe.createToken(card).then(function(result) {
+              // Disable the submit button to prevent repeated clicks
+              document.getElementById('complete-order').disabled = true;
+
+              var options = {
+                name: document.getElementById('name_on_card').value,
+                address_line1: document.getElementById('address').value,
+                address_city: document.getElementById('city').value,
+                address_state: document.getElementById('province').value,
+                address_zip: document.getElementById('postalcode').value
+              }
+
+              stripe.createToken(card, options).then(function(result) {
                 if (result.error) {
                   // Inform the user if there was an error.
                   var errorElement = document.getElementById('card-errors');
                   errorElement.textContent = result.error.message;
+
+                // Disable the submit button to prevent repeated clicks
+                document.getElementById('complete-order').disabled = false;
+
                 } else {
                   // Send the token to your server.
                   stripeTokenHandler(result.token);

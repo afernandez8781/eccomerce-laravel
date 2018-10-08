@@ -91,26 +91,25 @@
                 <!-- Grid row -->
                 <div class="row">
                     <!-- Filter by category-->
-                    <div class="col-md-6 col-lg-12 mb-5">
-                        <h5 class="font-weight-bold dark-grey-text"><strong>Category</strong></h5>
-                            <ul>
-                                <li><a href="#">Laptops</a></li>
-                                <li><a href="#">Desktops</a></li>
-                                <li><a href="#">Mobile Phones</a></li>
-                                <li><a href="#">Tablets</a></li>
-                                <li><a href="#">TVs</a></li>
-                                <li><a href="#">Digital Cameras</a></li>
-                                <li><a href="#">Appliances</a></li>
-                            </ul>
+                    <div class="col-md-6 col-lg-12 mb-4">
+                        
+                        <!-- Panel -->
+                        <h5><strong>Por precio</strong></h5>
+
+                        <li><a href="{{ route('shop.index', ['category' => request()->category, 'sort' => 'low_high']) }}">Bajo a alto</a></li>
+                        <li><a href="{{ route('shop.index', ['category' => request()->category, 'sort' => 'high_low']) }}">De alto a bajo</a></li>                        
+
                     </div>
                     <!-- /Filter by category-->
-                    <div class="col-md-6 col-lg-12 mb-5">
-                        <!-- Panel -->
-                        <h5 class="font-weight-bold dark-grey-text"><strong>By Price</strong></h5>
+                    <div class="col-md-6 col-lg-12">
+                        
+                        <h5 class="font-weight-bold dark-grey-text"><strong>Category</strong></h5>
+                        <ul>
+                            @foreach ($categories as $category)
+                                <li class="{{ setActiveCategory($category->slug) }}"><a href="{{ route('shop.index', ['category' => $category->slug]) }}">{{ $category->name }}</a></li>
+                            @endforeach
+                        </ul>
 
-                            <li><a href="#">$0 - $700</a></li>
-                            <li><a href="#">$700 - $2500</a></li>
-                            <li><a href="#">$2500+</a></li>
                     </div>
                 </div>
                 <!-- /Grid row -->
@@ -124,23 +123,22 @@
         <!-- Content -->
         <div class="col-lg-10">
 
-            <h4 class="text-center font-weight-bold dark-grey-text"><strong>DESTACADOS</strong></h4>
+            <h4 class="text-center text-uppercase"><strong>{{ $categoryName }}</strong></h4>
             <!-- Products Grid -->
-            <section class="section pt-4">
+            <section class="pt-4">
 
                 <!-- Grid row -->
                 <div class="row">
-                    @foreach ($products as $product)
+                    @forelse ($products as $product)
                     <!--Grid column-->
                     <div class="col-lg-4 col-md-6 mb-4">
                         <!--Card-->
                         <div class="card card-ecommerce">
 
                             <!--Card image-->
-                            <div class="view overlay">
-                                <img src="{{ asset('img/products/'.$product->slug.'.jpg') }}" class="img-fluid" alt="{{ $product->name }}">
-                                <a>
-                                    <div class="mask rgba-white-slight waves-effect waves-light"></div>
+                            <div class="text-center">
+                                <a href="{{ route('shop.show',$product->slug) }}">
+                                    <img src="{{ asset('img/products/'.$product->slug.'.jpg') }}" class="img-fluid" alt="{{ $product->name }}">
                                 </a>
                             </div>
                             <!--Card image-->
@@ -149,16 +147,20 @@
                             <div class="card-body">
                                 <!--Category & Title-->
 
-                                <h5 class="card-title mb-1"><strong><a href="{{ route('shop.show',$product->slug) }}" class="dark-grey-text">{{ $product->name }}</a></strong></h5><span class="badge badge-primary mb-2">Destacado</span>
-
+                                <h5 class=" mb-1"><strong><a href="{{ route('shop.show',$product->slug) }}">{{ $product->name }}</a></strong>
+                                </h5>
+                                <span class="badge badge-info mb-2" style="background: transparent;  margin-left: -12px">|</span>
+                                @if($product->featured == 1)
+                                    <span class="badge badge-danger mb-2">Destacado</span>
+                                @endif
                                 <!--Card footer-->
                                 <div class="card-footer pb-0">
                                     <div class="row mb-0">
-                                        <span class="float-left"><strong>{{ $product->presentPrice() }}$</strong></span>
+                                        <span><strong>{{ $product->presentPrice() }}</strong></span>
                                         <span class="float-right">
 
                                             <a class="" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add to Cart"><i class="fa fa-shopping-cart ml-3"></i></a>
-                                            </span>
+                                        </span>
                                     </div>
                                 </div>
 
@@ -170,52 +172,14 @@
 
                     </div>
                     <!--Grid column-->
-                    @endforeach
+                    @empty
+                        <div class="mb-5"><strong>NO HAY PRODUCTOS EN ESTA CATEGORIA</strong></div>
+                    @endforelse
                 </div>
                 <!--Grid row-->
-
-
                 <!--Grid row-->
-                <div class="row justify-content-center mb-4">
-
-                    <!--Pagination -->
-                    <nav class="mb-4">
-                        <ul class="pagination pagination-circle pg-blue mb-0">
-
-                            <!--First-->
-                            <li class="page-item disabled clearfix d-none d-md-block"><a class="page-link waves-effect waves-effect">First</a></li>
-
-                            <!--Arrow left-->
-                            <li class="page-item disabled">
-                                <a class="page-link waves-effect waves-effect" aria-label="Previous">
-                                    <span aria-hidden="true">«</span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                            </li>
-
-                            <!--Numbers-->
-                            <li class="page-item active"><a class="page-link waves-effect waves-effect">1</a></li>
-                            <li class="page-item"><a class="page-link waves-effect waves-effect">2</a></li>
-                            <li class="page-item"><a class="page-link waves-effect waves-effect">3</a></li>
-                            <li class="page-item"><a class="page-link waves-effect waves-effect">4</a></li>
-                            <li class="page-item"><a class="page-link waves-effect waves-effect">5</a></li>
-
-                            <!--Arrow right-->
-                            <li class="page-item">
-                                <a class="page-link waves-effect waves-effect" aria-label="Next">
-                                    <span aria-hidden="true">»</span>
-                                    <span class="sr-only">Next</span>
-                                </a>
-                            </li>
-
-                            <!--First-->
-                            <li class="page-item clearfix d-none d-md-block"><a class="page-link waves-effect waves-effect">Last</a></li>
-
-                        </ul>
-                    </nav>
-                    <!--/Pagination -->
-
-                </div>
+                {{-- {{ $products->links() }} --}}
+                {{ $products->appends(request()->input())->links() }}
                 <!--Grid row-->
             </section>
             <!-- /.Products Grid -->
