@@ -151,20 +151,57 @@
                 <div class="checkout-totals">
                     <div class="checkout-totals-left">
                         Subtotal <br>
-                        {{-- Discount (10OFF - 10%) <br> --}}
-                        IVA <br>
+                        @if (session()->has('coupon'))
+                            Descuento ({{ session()->get('coupon')['name'] }}): 
+                            <form action="{{ route('coupon.destroy') }}" method="POST" style="display:inline">
+                                {{ csrf_field() }}
+                                {{ method_field('delete') }}
+                                <span class="btn-group-sm" data-toggle="tooltip" title="Eliminar descuento">
+                                    <button type="submit" class="btn btn-danger bmd-btn-fab">
+                                    <i class="material-icons">delete</i>
+                                    </button>
+                                </span>
+                            </form>
+                            <br>
+                            <hr>
+                            Nuevo Subtotal <br>
+                        @endif
+                        IVA (13%)<br>
                         <span class="checkout-totals-total">Total</span>
 
                     </div>
 
                     <div class="checkout-totals-right">
                         {{ presentPrice(Cart::subtotal()) }} <br>
-                        {{-- -$750.00 <br> --}}
-                        {{ presentPrice(Cart::tax()) }}<br>
-                        <span class="checkout-totals-total">{{ presentPrice(Cart::total()) }}</span>
+                        @if (session()->has('coupon'))
+
+                            -{{ presentPrice($discount) }} <br>
+                            <hr>
+                            {{ presentPrice($newSubtotal) }} <br>
+                        @endif
+                        {{ presentPrice($newTax) }}<br>
+                        <span class="checkout-totals-total">{{ presentPrice($newTotal) }}</span>
 
                     </div>
                 </div> <!-- end checkout-totals -->
+
+                @if(!session()->has('coupon'))
+
+                    <a href="#" class="have-code">Tienes un cupón de descuento?</a>
+
+                    <form class="form-inline" action="{{ route('coupon.store') }}" method="POST">
+                        {{ csrf_field() }}
+                      <div class="form-group">
+                        <label for="coupon_code" class="bmd-label-floating">Codigo</label>
+                        <input type="text" class="form-control" name="coupon_code" id="coupon_code">
+                      </div>
+                      <span class="form-group bmd-form-group"> <!-- needed to match padding for floating labels -->
+                        <button type="submit" class="btn btn-primary">Aplicar</button>
+                      </span>
+                    </form>
+
+                @endif
+
 
             </div>
 
