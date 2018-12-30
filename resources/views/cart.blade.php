@@ -68,7 +68,7 @@
         
         @if(Cart::count() > 0)
 
-        <h2><strong>{{ Cart::count() > 0}} producto(s) en la cesta de compras</strong></h2>
+        <h2><strong>{{ Cart::count() }} producto(s) en la cesta de compras</strong></h2>
         <div class="card pl-3 pr-3 pt-3">
             <div class="cart-table">
             @foreach(Cart::content() as $item)
