@@ -65,7 +65,7 @@
             <h1 class="text-center font-weight-bold dark-grey-text"><strong>Tienda virtual Demo</strong></h1>
             <p>Includes multiple products, categories, a shopping cart and a checkout system with Stripe integration.</p>
             <div class="hero-buttons">
-                <a href="#" class="btn btn-raised btn-primary">Blog Post</a>
+                <a href="#" class="btn btn-raised btn-primary">Screencast</a>
                 <a href="#" class="btn btn-raised btn-info">GitHub</a>
             </div>
         </div>
